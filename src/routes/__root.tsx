@@ -11,6 +11,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { BottomNav } from "../components/grambiz/BottomNav";
+import { TopBar } from "../components/grambiz/TopBar";
+import { AppStateProvider } from "../lib/app-state";
+import { LanguageProvider } from "../lib/i18n";
 
 function NotFoundComponent() {
   return (
