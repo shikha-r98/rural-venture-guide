@@ -9,15 +9,15 @@ type Ctx = {
 };
 
 const AppStateContext = createContext<Ctx>({
-  villageId: villages[0].id,
+  villageId: villages[0]!.id,
   setVillageId: () => {},
-  budget: budgets[2].value,
+  budget: budgets[2]!.value,
   setBudget: () => {},
 });
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
-  const [villageId, setVillageIdState] = useState(villages[0].id);
-  const [budget, setBudgetState] = useState(budgets[2].value);
+  const [villageId, setVillageIdState] = useState(villages[0]!.id);
+  const [budget, setBudgetState] = useState(budgets[2]!.value);
 
   useEffect(() => {
     const v = window.localStorage.getItem("grambiz-village");
@@ -48,5 +48,5 @@ export function useAppState() {
 
 export function useVillage() {
   const { villageId } = useAppState();
-  return villages.find((v) => v.id === villageId) ?? villages[0];
+  return villages.find((v) => v.id === villageId) ?? villages[0]!;
 }
