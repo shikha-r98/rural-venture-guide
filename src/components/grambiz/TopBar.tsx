@@ -63,6 +63,7 @@ export function TopBar() {
         >
           EN
         </button>
+        </div>
       </div>
     </header>
   );
