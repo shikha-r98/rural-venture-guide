@@ -1,7 +1,21 @@
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { useAuthUser } from "@/lib/use-auth";
 
 export function TopBar() {
   const { lang, setLang, tr } = useLang();
+  const { user } = useAuthUser();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
   return (
     <header className="panel-dark flex items-center justify-between rounded-2xl px-4 py-3">
