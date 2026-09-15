@@ -30,7 +30,23 @@ export function TopBar() {
           <p className="text-[10px] text-paper/60">{tr("appTagline")}</p>
         </div>
       </div>
-      <div className="flex rounded-full bg-paper/15 p-1">
+      <div className="flex items-center gap-2">
+        {user ? (
+          <button
+            onClick={signOut}
+            className="rounded-full bg-paper/15 px-3 py-1.5 text-xs font-semibold text-paper"
+          >
+            {lang === "hi" ? "लॉगआउट" : "Sign out"}
+          </button>
+        ) : (
+          <Link
+            to="/auth"
+            className="rounded-full bg-mint/25 px-3 py-1.5 text-xs font-semibold text-mint"
+          >
+            {lang === "hi" ? "लॉगिन" : "Sign in"}
+          </Link>
+        )}
+        <div className="flex rounded-full bg-paper/15 p-1">
         <button
           onClick={() => setLang("hi")}
           className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
