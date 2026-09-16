@@ -60,13 +60,28 @@ function Dashboard() {
         <p className="mt-0.5 text-xs text-paper/60">{tr("findBusinessSub")}</p>
 
         <label className="mt-3 flex items-center gap-2 rounded-xl bg-paper/95 px-3 py-2.5">
+          <span className="text-base">🗺️</span>
+          <select
+            value={stateId}
+            onChange={(e) => setStateId(e.target.value)}
+            className="w-full bg-transparent text-sm font-semibold text-ink outline-none"
+          >
+            {states.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name[lang]}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="mt-2 flex items-center gap-2 rounded-xl bg-paper/95 px-3 py-2.5">
           <span className="text-base">📍</span>
           <select
             value={villageId}
             onChange={(e) => setVillageId(e.target.value)}
             className="w-full bg-transparent text-sm font-semibold text-ink outline-none"
           >
-            {villages.map((v) => (
+            {stateVillages.map((v) => (
               <option key={v.id} value={v.id}>
                 {v.name[lang]} · {v.district[lang]}
               </option>
