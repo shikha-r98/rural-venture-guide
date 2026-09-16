@@ -1,7 +1,12 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { villages, budgets } from "./grambiz-data";
+import { budgets, villageById, villages, villagesByState } from "./grambiz-data";
+import { states } from "./india-data";
+
+const defaultVillage = villages.find((v) => v.id === "pb-raipura") ?? villages[0]!;
 
 type Ctx = {
+  stateId: string;
+  setStateId: (id: string) => void;
   villageId: string;
   setVillageId: (id: string) => void;
   budget: number;
@@ -9,26 +14,43 @@ type Ctx = {
 };
 
 const AppStateContext = createContext<Ctx>({
-  villageId: villages[0]!.id,
+  stateId: defaultVillage.stateId,
+  setStateId: () => {},
+  villageId: defaultVillage.id,
   setVillageId: () => {},
-  budget: budgets[2]!.value,
+  budget: budgets[3]!.value,
   setBudget: () => {},
 });
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
-  const [villageId, setVillageIdState] = useState(villages[0]!.id);
-  const [budget, setBudgetState] = useState(budgets[2]!.value);
+  const [stateId, setStateIdState] = useState(defaultVillage.stateId);
+  const [villageId, setVillageIdState] = useState(defaultVillage.id);
+  const [budget, setBudgetState] = useState(budgets[3]!.value);
 
   useEffect(() => {
+    const s = window.localStorage.getItem("grambiz-state");
     const v = window.localStorage.getItem("grambiz-village");
     const b = window.localStorage.getItem("grambiz-budget");
+    if (s && states.some((x) => x.id === s)) setStateIdState(s);
     if (v && villages.some((x) => x.id === v)) setVillageIdState(v);
     if (b) setBudgetState(Number(b));
   }, []);
 
+  const setStateId = (id: string) => {
+    setStateIdState(id);
+    window.localStorage.setItem("grambiz-state", id);
+    const first = villagesByState(id)[0];
+    if (first) {
+      setVillageIdState(first.id);
+      window.localStorage.setItem("grambiz-village", first.id);
+    }
+  };
   const setVillageId = (id: string) => {
     setVillageIdState(id);
     window.localStorage.setItem("grambiz-village", id);
+    const v = villageById(id);
+    setStateIdState(v.stateId);
+    window.localStorage.setItem("grambiz-state", v.stateId);
   };
   const setBudget = (b: number) => {
     setBudgetState(b);
@@ -36,7 +58,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppStateContext.Provider value={{ villageId, setVillageId, budget, setBudget }}>
+    <AppStateContext.Provider
+      value={{ stateId, setStateId, villageId, setVillageId, budget, setBudget }}
+    >
       {children}
     </AppStateContext.Provider>
   );
@@ -48,5 +72,5 @@ export function useAppState() {
 
 export function useVillage() {
   const { villageId } = useAppState();
-  return villages.find((v) => v.id === villageId) ?? villages[0]!;
+  return villageById(villageId);
 }
