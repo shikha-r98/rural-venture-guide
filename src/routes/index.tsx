@@ -5,11 +5,12 @@ import { Panel } from "@/components/grambiz/Panel";
 import { useAppState, useVillage } from "@/lib/app-state";
 import {
   budgets,
-  businessesByVillage,
   formatRupees,
-  rentalShops,
-  trends,
-  villages,
+  getBusinesses,
+  getShops,
+  getTrends,
+  states,
+  villagesByState,
   type Business,
 } from "@/lib/grambiz-data";
 import { useLang } from "@/lib/i18n";
