@@ -41,13 +41,16 @@ function compLabel(c: Business["competition"], tr: (k: string) => string) {
 
 function Dashboard() {
   const { lang, tr } = useLang();
-  const { villageId, setVillageId, budget, setBudget } = useAppState();
+  const { stateId, setStateId, villageId, setVillageId, budget, setBudget } = useAppState();
   const village = useVillage();
   const [searched, setSearched] = useState(false);
 
-  const all = businessesByVillage[villageId] ?? [];
+  const stateVillages = villagesByState(stateId);
+  const all = getBusinesses(villageId);
+  const trends = getTrends(villageId);
+  const rentalShops = getShops(villageId);
   const picks = all.filter((b) => b.investment <= budget);
-  const list = picks.length > 0 ? picks : all.slice(0, 1);
+  const list = (picks.length > 0 ? picks : all.slice(0, 3)).slice(0, 8);
 
   return (
     <div className="flex flex-col gap-3">
