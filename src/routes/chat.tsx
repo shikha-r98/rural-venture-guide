@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { useAppState, useVillage } from "@/lib/app-state";
-import { businessesByVillage, formatRupees } from "@/lib/grambiz-data";
+import { getBusinesses, formatRupees } from "@/lib/grambiz-data";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/chat")({
@@ -47,9 +47,9 @@ function ChatPage() {
   const [loading, setLoading] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
-  const picks = businessesByVillage[village.id] ?? [];
+  const picks = getBusinesses(village.id).slice(0, 6);
   const context = [
-    `Village: ${village.name.en} (${village.district.en}), population ${village.population}, demand score ${village.demandScore}/100, ${village.existingShops} existing shops.`,
+    `Village: ${village.name.en} (${village.district.en}, ${village.stateName.en}), population ${village.population}, demand score ${village.demandScore}/100, ${village.existingShops} existing shops.`,
     `User budget: ${formatRupees(budget)}.`,
     `Local options: ${picks
       .map(

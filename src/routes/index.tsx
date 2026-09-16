@@ -5,11 +5,12 @@ import { Panel } from "@/components/grambiz/Panel";
 import { useAppState, useVillage } from "@/lib/app-state";
 import {
   budgets,
-  businessesByVillage,
   formatRupees,
-  rentalShops,
-  trends,
-  villages,
+  getBusinesses,
+  getShops,
+  getTrends,
+  states,
+  villagesByState,
   type Business,
 } from "@/lib/grambiz-data";
 import { useLang } from "@/lib/i18n";
@@ -40,13 +41,16 @@ function compLabel(c: Business["competition"], tr: (k: string) => string) {
 
 function Dashboard() {
   const { lang, tr } = useLang();
-  const { villageId, setVillageId, budget, setBudget } = useAppState();
+  const { stateId, setStateId, villageId, setVillageId, budget, setBudget } = useAppState();
   const village = useVillage();
   const [searched, setSearched] = useState(false);
 
-  const all = businessesByVillage[villageId] ?? [];
+  const stateVillages = villagesByState(stateId);
+  const all = getBusinesses(villageId);
+  const trends = getTrends(villageId);
+  const rentalShops = getShops(villageId);
   const picks = all.filter((b) => b.investment <= budget);
-  const list = picks.length > 0 ? picks : all.slice(0, 1);
+  const list = (picks.length > 0 ? picks : all.slice(0, 3)).slice(0, 8);
 
   return (
     <div className="flex flex-col gap-3">
@@ -56,13 +60,28 @@ function Dashboard() {
         <p className="mt-0.5 text-xs text-paper/60">{tr("findBusinessSub")}</p>
 
         <label className="mt-3 flex items-center gap-2 rounded-xl bg-paper/95 px-3 py-2.5">
+          <span className="text-base">🗺️</span>
+          <select
+            value={stateId}
+            onChange={(e) => setStateId(e.target.value)}
+            className="w-full bg-transparent text-sm font-semibold text-ink outline-none"
+          >
+            {states.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name[lang]}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="mt-2 flex items-center gap-2 rounded-xl bg-paper/95 px-3 py-2.5">
           <span className="text-base">📍</span>
           <select
             value={villageId}
             onChange={(e) => setVillageId(e.target.value)}
             className="w-full bg-transparent text-sm font-semibold text-ink outline-none"
           >
-            {villages.map((v) => (
+            {stateVillages.map((v) => (
               <option key={v.id} value={v.id}>
                 {v.name[lang]} · {v.district[lang]}
               </option>

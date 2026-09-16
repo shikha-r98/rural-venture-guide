@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import villageMap from "@/assets/village-map.jpg";
 import { Panel } from "@/components/grambiz/Panel";
 import { useVillage } from "@/lib/app-state";
-import { formatRupees, rentalShops } from "@/lib/grambiz-data";
+import { formatRupees, getShops } from "@/lib/grambiz-data";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/shops")({
@@ -27,6 +27,7 @@ export const Route = createFileRoute("/shops")({
 function ShopsPage() {
   const { lang, tr } = useLang();
   const village = useVillage();
+  const rentalShops = getShops(village.id);
 
   return (
     <div className="flex flex-col gap-3">

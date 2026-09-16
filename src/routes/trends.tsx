@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Panel } from "@/components/grambiz/Panel";
 import { useVillage } from "@/lib/app-state";
-import { businessesByVillage, trends, formatRupees } from "@/lib/grambiz-data";
+import { getBusinesses, getTrends, formatRupees } from "@/lib/grambiz-data";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/trends")({
@@ -26,7 +26,8 @@ export const Route = createFileRoute("/trends")({
 function TrendsPage() {
   const { lang, tr } = useLang();
   const village = useVillage();
-  const list = businessesByVillage[village.id] ?? [];
+  const list = getBusinesses(village.id).slice(0, 10);
+  const trends = getTrends(village.id);
 
   return (
     <div className="flex flex-col gap-3">
