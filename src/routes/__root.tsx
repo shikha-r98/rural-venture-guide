@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "../components/grambiz/BottomNav";
 import { TopBar } from "../components/grambiz/TopBar";
 import { AuthGate } from "../components/grambiz/AuthGate";
+import { useAuthUser } from "../lib/use-auth";
 import { AppStateProvider } from "../lib/app-state";
 import { LanguageProvider } from "../lib/i18n";
 
@@ -143,4 +144,10 @@ function RootComponent() {
       </LanguageProvider>
     </QueryClientProvider>
   );
+}
+
+function SignedInNav() {
+  const { user } = useAuthUser();
+  if (!user) return null;
+  return <BottomNav />;
 }
