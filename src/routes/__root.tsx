@@ -133,9 +133,11 @@ function RootComponent() {
             <div className="mx-auto flex max-w-[430px] flex-col gap-3 px-4 pb-24 pt-3">
               <TopBar />
               {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-              <Outlet />
+              <AuthGate>
+                <Outlet />
+              </AuthGate>
             </div>
-            <BottomNav />
+            <SignedInNav />
           </div>
         </AppStateProvider>
       </LanguageProvider>
