@@ -48,7 +48,36 @@ export const t: Dict = {
   },
   competitionTitle: { hi: "प्रतिस्पर्धा अनुमान", en: "Competition forecast" },
   marketSize: { hi: "बाज़ार आकार", en: "Market size" },
+  notFound: { hi: "यह धंधा नहीं मिला", en: "Business not found" },
+  backToPicks: { hi: "सिफारिशों पर वापस", en: "Back to picks" },
+  loanCalc: { hi: "कर्ज़ और किश्त गणना", en: "Loan & EMI calculator" },
+  loanShare: { hi: "कर्ज़ का हिस्सा", en: "Loan share" },
+  interestRate: { hi: "ब्याज दर", en: "Interest rate" },
+  tenure: { hi: "अवधि", en: "Tenure" },
+  ownFunds: { hi: "अपना पैसा", en: "Your own money" },
+  loanAmount: { hi: "कर्ज़ राशि", en: "Loan amount" },
+  emi: { hi: "मासिक किश्त (EMI)", en: "Monthly EMI" },
+  totalInterest: { hi: "कुल ब्याज", en: "Total interest" },
+  totalRepaid: { hi: "कुल चुकाना", en: "Total repayment" },
+  profitAfterEmi: { hi: "किश्त के बाद मुनाफ़ा", en: "Profit after EMI" },
+  yearOne: { hi: "पहले साल की बचत", en: "First-year earnings" },
+  breakEven: { hi: "पैसा वापस", en: "Break-even" },
+  annualRoi: { hi: "सालाना रिटर्न", en: "Annual return" },
+  monthlyMath: { hi: "महीने का हिसाब", en: "Monthly maths" },
+  revenue: { hi: "कुल बिक्री", en: "Sales" },
+  stockCost: { hi: "माल की लागत", en: "Stock cost" },
+  labourCost: { hi: "मज़दूरी", en: "Labour" },
+  powerCost: { hi: "बिजली", en: "Electricity" },
+  rentCost: { hi: "दुकान किराया", en: "Shop rent" },
+  miscCost: { hi: "अन्य खर्च", en: "Other costs" },
+  estimateNote: {
+    hi: "ये अनुमान हैं — असली आंकड़े गाँव और मौसम से बदल सकते हैं।",
+    en: "These are estimates — real numbers vary by village and season.",
+  },
+  govtSchemes: { hi: "सरकारी योजनाएँ", en: "Government schemes" },
+  viewPlan: { hi: "पूरा हिसाब देखें", en: "View full plan" },
 };
+
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; tr: (k: keyof typeof t | string) => string };
 
