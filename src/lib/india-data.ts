@@ -55,7 +55,7 @@ export const states: StateSeed[] = [
     tags: ["tea", "paddy", "forest"],
     villages: [
       { id: "as-sualkuchi", name: { hi: "सुआलकुची", en: "Sualkuchi" }, district: { hi: "कामरूप", en: "Kamrup" } },
-      { id: "as-titabor", name: { hi: "तितabor", en: "Titabor" }, district: { hi: "जोरहाट", en: "Jorhat" } },
+      { id: "as-titabor", name: { hi: "तीताबोर", en: "Titabor" }, district: { hi: "जोरहाट", en: "Jorhat" } },
       { id: "as-bokakhat", name: { hi: "बोकाखाट", en: "Bokakhat" }, district: { hi: "गोलाघाट", en: "Golaghat" } },
     ],
   },

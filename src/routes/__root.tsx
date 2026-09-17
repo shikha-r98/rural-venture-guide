@@ -13,6 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "../components/grambiz/BottomNav";
 import { TopBar } from "../components/grambiz/TopBar";
+import { AuthGate } from "../components/grambiz/AuthGate";
+import { useAuthUser } from "../lib/use-auth";
 import { AppStateProvider } from "../lib/app-state";
 import { LanguageProvider } from "../lib/i18n";
 
@@ -132,12 +134,20 @@ function RootComponent() {
             <div className="mx-auto flex max-w-[430px] flex-col gap-3 px-4 pb-24 pt-3">
               <TopBar />
               {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-              <Outlet />
+              <AuthGate>
+                <Outlet />
+              </AuthGate>
             </div>
-            <BottomNav />
+            <SignedInNav />
           </div>
         </AppStateProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );
+}
+
+function SignedInNav() {
+  const { user } = useAuthUser();
+  if (!user) return null;
+  return <BottomNav />;
 }
