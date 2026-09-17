@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "../components/grambiz/BottomNav";
 import { TopBar } from "../components/grambiz/TopBar";
+import { AuthGate } from "../components/grambiz/AuthGate";
 import { AppStateProvider } from "../lib/app-state";
 import { LanguageProvider } from "../lib/i18n";
 
