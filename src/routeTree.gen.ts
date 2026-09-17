@@ -15,6 +15,7 @@ import { Route as ChatRouteImport } from './routes/chat'
 import { Route as ShopsRouteImport } from './routes/shops'
 import { Route as TrendsRouteImport } from './routes/trends'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as BusinessIdRouteImport } from './routes/business.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BusinessIdRoute = BusinessIdRouteImport.update({
+  id: '/business/$id',
+  path: '/business/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/shops': typeof ShopsRoute
   '/trends': typeof TrendsRoute
   '/api/chat': typeof ApiChatRoute
+  '/business/$id': typeof BusinessIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/shops': typeof ShopsRoute
   '/trends': typeof TrendsRoute
   '/api/chat': typeof ApiChatRoute
+  '/business/$id': typeof BusinessIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,13 +79,36 @@ export interface FileRoutesById {
   '/shops': typeof ShopsRoute
   '/trends': typeof TrendsRoute
   '/api/chat': typeof ApiChatRoute
+  '/business/$id': typeof BusinessIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/chat' | '/shops' | '/trends' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/chat'
+    | '/shops'
+    | '/trends'
+    | '/api/chat'
+    | '/business/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/chat' | '/shops' | '/trends' | '/api/chat'
-  id: '__root__' | '/' | '/auth' | '/chat' | '/shops' | '/trends' | '/api/chat'
+  to:
+    | '/'
+    | '/auth'
+    | '/chat'
+    | '/shops'
+    | '/trends'
+    | '/api/chat'
+    | '/business/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/chat'
+    | '/shops'
+    | '/trends'
+    | '/api/chat'
+    | '/business/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,6 +118,7 @@ export interface RootRouteChildren {
   ShopsRoute: typeof ShopsRoute
   TrendsRoute: typeof TrendsRoute
   ApiChatRoute: typeof ApiChatRoute
+  BusinessIdRoute: typeof BusinessIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/business/$id': {
+      id: '/business/$id'
+      path: '/business/$id'
+      fullPath: '/business/$id'
+      preLoaderRoute: typeof BusinessIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -143,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShopsRoute: ShopsRoute,
   TrendsRoute: TrendsRoute,
   ApiChatRoute: ApiChatRoute,
+  BusinessIdRoute: BusinessIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
