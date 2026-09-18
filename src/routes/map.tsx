@@ -93,8 +93,8 @@ function MapPage() {
                 cx={CENTER}
                 cy={CENTER}
                 r={ringR(km)}
-                fill={i === 1 ? "hsl(var(--mint) / 0.12)" : "transparent"}
-                stroke="hsl(var(--sign))"
+                fill={i === 1 ? "var(--mint)" : "transparent"}
+                stroke="var(--sign)"
                 strokeOpacity={i === 1 ? 0.7 : 0.3}
                 strokeDasharray={i === 1 ? "0" : "4 4"}
                 strokeWidth={1.5}
@@ -116,8 +116,8 @@ function MapPage() {
                     cx={x}
                     cy={y}
                     r={active ? 13 : 10}
-                    fill="hsl(var(--paper))"
-                    stroke="hsl(var(--sign))"
+                    fill="var(--paper)"
+                    stroke="var(--sign)"
                     strokeWidth={active ? 2.5 : 1.2}
                   />
                   <text x={x} y={y + 4} textAnchor="middle" fontSize="11">
@@ -126,13 +126,13 @@ function MapPage() {
                 </g>
               );
             })}
-            <circle cx={CENTER} cy={CENTER} r={7} fill="hsl(var(--tomato))" />
+            <circle cx={CENTER} cy={CENTER} r={7} fill="var(--tomato)" />
             <circle
               cx={CENTER}
               cy={CENTER}
               r={12}
               fill="none"
-              stroke="hsl(var(--tomato))"
+              stroke="var(--tomato)"
               strokeOpacity={0.5}
             />
           </svg>
@@ -154,7 +154,7 @@ function MapPage() {
             step={1}
             value={radius}
             onChange={(e) => setRadius(Number(e.target.value))}
-            className="mt-1 w-full accent-[hsl(var(--sign))]"
+            className="mt-1 w-full accent-[var(--sign)]"
             aria-label={tr("radius")}
           />
           <div className="flex justify-between text-[10px] text-ink/40">
