@@ -156,7 +156,12 @@ function Dashboard() {
       <Panel title={tr("topPicks")}>
         <div className="flex flex-col gap-2.5">
           {list.map((b) => (
-            <article key={b.id} className="rounded-xl bg-paper p-3">
+            <Link
+              key={b.id}
+              to="/business/$id"
+              params={{ id: b.id }}
+              className="block rounded-xl bg-paper p-3 transition-transform active:scale-[0.99]"
+            >
               <div className="flex items-center justify-between gap-2">
                 <span className="flex items-center gap-2 text-sm font-bold text-ink">
                   <span className="text-base">{b.emoji}</span>
@@ -191,7 +196,10 @@ function Dashboard() {
                   {tr("roi")} {b.paybackMonths} {tr("months")}
                 </span>
               </div>
-            </article>
+              <div className="mt-2 text-right text-xs font-semibold text-mint-deep">
+                {tr("viewPlan")} →
+              </div>
+            </Link>
           ))}
         </div>
       </Panel>
