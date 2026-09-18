@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChatRouteImport } from './routes/chat'
+import { Route as MapRouteImport } from './routes/map'
 import { Route as ShopsRouteImport } from './routes/shops'
 import { Route as TrendsRouteImport } from './routes/trends'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -30,6 +31,11 @@ const AuthRoute = AuthRouteImport.update({
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',
   path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopsRoute = ShopsRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/chat': typeof ChatRoute
+  '/map': typeof MapRoute
   '/shops': typeof ShopsRoute
   '/trends': typeof TrendsRoute
   '/api/chat': typeof ApiChatRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/chat': typeof ChatRoute
+  '/map': typeof MapRoute
   '/shops': typeof ShopsRoute
   '/trends': typeof TrendsRoute
   '/api/chat': typeof ApiChatRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/chat': typeof ChatRoute
+  '/map': typeof MapRoute
   '/shops': typeof ShopsRoute
   '/trends': typeof TrendsRoute
   '/api/chat': typeof ApiChatRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/chat'
+    | '/map'
     | '/shops'
     | '/trends'
     | '/api/chat'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/chat'
+    | '/map'
     | '/shops'
     | '/trends'
     | '/api/chat'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/chat'
+    | '/map'
     | '/shops'
     | '/trends'
     | '/api/chat'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   ChatRoute: typeof ChatRoute
+  MapRoute: typeof MapRoute
   ShopsRoute: typeof ShopsRoute
   TrendsRoute: typeof TrendsRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/chat'
       fullPath: '/chat'
       preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shops': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   ChatRoute: ChatRoute,
+  MapRoute: MapRoute,
   ShopsRoute: ShopsRoute,
   TrendsRoute: TrendsRoute,
   ApiChatRoute: ApiChatRoute,
