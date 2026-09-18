@@ -76,6 +76,21 @@ export const t: Dict = {
   },
   govtSchemes: { hi: "सरकारी योजनाएँ", en: "Government schemes" },
   viewPlan: { hi: "पूरा हिसाब देखें", en: "View full plan" },
+  map: { hi: "नक्शा", en: "Map" },
+  mapTitle: { hi: "गाँव का नक्शा", en: "Village map" },
+  radius: { hi: "दायरा", en: "Search radius" },
+  allTypes: { hi: "सभी तरह", en: "All types" },
+  shopsWithin: { hi: "दुकानें इस दायरे में", en: "shops within" },
+  sameTypeNearby: { hi: "इसी तरह की पास की दुकानें", en: "Same type of shops nearby" },
+  noShopsHere: {
+    hi: "इस दायरे में इस तरह की कोई दुकान नहीं — यहाँ अच्छा मौका है।",
+    en: "No shop of this type in this radius — a good opening for you.",
+  },
+  openNow: { hi: "अभी खुली", en: "Open now" },
+  closedNow: { hi: "अभी बंद", en: "Closed" },
+  gapHere: { hi: "खाली मौका", en: "Open gap" },
+  someHere: { hi: "कुछ दुकानें", en: "Some shops" },
+  crowdedHere: { hi: "भीड़-भाड़", en: "Crowded" },
 };
 
 

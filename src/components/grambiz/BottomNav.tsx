@@ -3,6 +3,7 @@ import { useLang } from "@/lib/i18n";
 
 const items = [
   { to: "/", key: "home", icon: "🏠" },
+  { to: "/map", key: "map", icon: "🗺️" },
   { to: "/trends", key: "trends", icon: "📈" },
   { to: "/shops", key: "shops", icon: "🏪" },
   { to: "/chat", key: "chat", icon: "💬" },
@@ -21,7 +22,7 @@ export function BottomNav() {
             activeOptions={{ exact: it.to === "/" }}
             activeProps={{ className: "bg-sign/10 text-sign font-semibold" }}
             inactiveProps={{ className: "text-ink/50" }}
-            className="flex flex-col items-center gap-0.5 rounded-xl px-4 py-1.5 text-[11px]"
+            className="flex flex-col items-center gap-0.5 rounded-xl px-3 py-1.5 text-[11px]"
           >
             <span className="text-base">{it.icon}</span>
             {tr(it.key)}
