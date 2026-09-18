@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Panel } from "@/components/grambiz/Panel";
 import { useVillage } from "@/lib/app-state";
 import { getBusinesses, getTrends, formatRupees } from "@/lib/grambiz-data";
@@ -59,7 +59,12 @@ function TrendsPage() {
           {list.map((b) => {
             const width = b.competition === "low" ? 30 : b.competition === "moderate" ? 62 : 90;
             return (
-              <div key={b.id} className="rounded-xl bg-paper p-3">
+              <Link
+                key={b.id}
+                to="/business/$id"
+                params={{ id: b.id }}
+                className="block rounded-xl bg-paper p-3 transition-transform active:scale-[0.99]"
+              >
                 <div className="flex items-center justify-between text-sm font-bold text-ink">
                   <span>
                     {b.emoji} {b.name[lang]}
@@ -86,7 +91,10 @@ function TrendsPage() {
                     {tr("roi")} {b.paybackMonths} {tr("months")}
                   </span>
                 </div>
-              </div>
+                <div className="mt-1.5 text-right text-xs font-semibold text-mint-deep">
+                  {tr("viewPlan")} →
+                </div>
+              </Link>
             );
           })}
         </div>
