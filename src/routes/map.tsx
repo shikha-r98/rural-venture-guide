@@ -94,6 +94,7 @@ function MapPage() {
                 cy={CENTER}
                 r={ringR(km)}
                 fill={i === 1 ? "var(--mint)" : "transparent"}
+                fillOpacity={i === 1 ? 0.18 : 0}
                 stroke="var(--sign)"
                 strokeOpacity={i === 1 ? 0.7 : 0.3}
                 strokeDasharray={i === 1 ? "0" : "4 4"}
