@@ -4,7 +4,7 @@ import { useAppState, useVillage } from "@/lib/app-state";
 import { formatRupees, getBusinesses, getTrends } from "@/lib/grambiz-data";
 import { bi, useLang } from "@/lib/i18n";
 
-type Note = { id: string; icon: string; text: string; to: string; params?: { id: string } };
+type Note = { id: string; icon: string; text: string; to: string; params?: { id: string } | undefined };
 
 const KEY = "grambiz-read-notes";
 
