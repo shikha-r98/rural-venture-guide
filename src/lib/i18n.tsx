@@ -91,29 +91,76 @@ export const t: Dict = {
   gapHere: { hi: "खाली मौका", en: "Open gap" },
   someHere: { hi: "कुछ दुकानें", en: "Some shops" },
   crowdedHere: { hi: "भीड़-भाड़", en: "Crowded" },
+  notifications: { hi: "सूचनाएँ", en: "Notifications" },
+  markAllRead: { hi: "सब पढ़ लिया", en: "Mark all read" },
+  noNotifications: { hi: "कोई नई सूचना नहीं", en: "No new notifications" },
+  language: { hi: "भाषा", en: "Language" },
 };
 
 
-type Ctx = { lang: Lang; setLang: (l: Lang) => void; tr: (k: keyof typeof t | string) => string };
+export type UiLang = "hi" | "en" | "bn" | "mr" | "ta" | "te" | "gu" | "kn" | "ml" | "pa";
 
-const LangContext = createContext<Ctx>({ lang: "hi", setLang: () => {}, tr: (k) => String(k) });
+export const languages: { id: UiLang; label: string; name: string }[] = [
+  { id: "hi", label: "हिंदी", name: "Hindi" },
+  { id: "en", label: "English", name: "English" },
+  { id: "bn", label: "বাংলা", name: "Bengali" },
+  { id: "mr", label: "मराठी", name: "Marathi" },
+  { id: "ta", label: "தமிழ்", name: "Tamil" },
+  { id: "te", label: "తెలుగు", name: "Telugu" },
+  { id: "gu", label: "ગુજરાતી", name: "Gujarati" },
+  { id: "kn", label: "ಕನ್ನಡ", name: "Kannada" },
+  { id: "ml", label: "മലയാളം", name: "Malayalam" },
+  { id: "pa", label: "ਪੰਜਾਬੀ", name: "Punjabi" },
+];
+
+// Core UI words in regional languages; anything missing falls back to English.
+const K = ["appTagline","findBusiness","village","budget","search","topPicks","invest","profit","perMonth","competition","low","moderate","high","marketTrends","nearbyShops","home","trends","shops","chat","map","send","ask","viewPlan","govtSchemes","radius","notifications"] as const;
+const rows: Record<Exclude<UiLang, "hi" | "en">, string[]> = {
+  bn: ["গ্রামের জন্য ব্যবসার পরামর্শ","নতুন ব্যবসা খুঁজুন","গ্রাম / শহর","বাজেট","খুঁজুন","সেরা পরামর্শ","বিনিয়োগ","লাভ","/মাস","প্রতিযোগিতা","কম","মাঝারি","বেশি","বাজারের প্রবণতা","কাছের দোকান","হোম","ট্রেন্ড","দোকান","চ্যাট","মানচিত্র","পাঠান","জিজ্ঞাসা করুন","পুরো হিসাব দেখুন","সরকারি প্রকল্প","দূরত্ব","বিজ্ঞপ্তি"],
+  mr: ["गावासाठी व्यवसाय सल्ला","नवीन व्यवसाय शोधा","गाव / शहर","बजेट","शोधा","सर्वोत्तम शिफारसी","गुंतवणूक","नफा","/महिना","स्पर्धा","कमी","मध्यम","जास्त","बाजार कल","जवळची दुकाने","होम","ट्रेंड्स","दुकाने","चॅट","नकाशा","पाठवा","विचारा","पूर्ण हिशोब पहा","सरकारी योजना","अंतर","सूचना"],
+  ta: ["கிராமத்திற்கான வணிக ஆலோசனை","புதிய தொழில் தேடுங்கள்","கிராமம் / ஊர்","பட்ஜெட்","தேடு","சிறந்த பரிந்துரைகள்","முதலீடு","லாபம்","/மாதம்","போட்டி","குறைவு","நடுத்தரம்","அதிகம்","சந்தை போக்குகள்","அருகிலுள்ள கடைகள்","முகப்பு","போக்குகள்","கடைகள்","அரட்டை","வரைபடம்","அனுப்பு","கேள்","முழு திட்டம்","அரசு திட்டங்கள்","சுற்றளவு","அறிவிப்புகள்"],
+  te: ["గ్రామానికి వ్యాపార సలహా","కొత్త వ్యాపారం కనుగొనండి","గ్రామం / పట్టణం","బడ్జెట్","వెతకండి","ఉత్తమ సూచనలు","పెట్టుబడి","లాభం","/నెల","పోటీ","తక్కువ","మధ్యస్థం","ఎక్కువ","మార్కెట్ ధోరణులు","దగ్గరి దుకాణాలు","హోమ్","ట్రెండ్స్","దుకాణాలు","చాట్","మ్యాప్","పంపు","అడగండి","పూర్తి ప్లాన్","ప్రభుత్వ పథకాలు","పరిధి","నోటిఫికేషన్లు"],
+  gu: ["ગામ માટે ધંધાની સલાહ","નવો ધંધો શોધો","ગામ / નગર","બજેટ","શોધો","શ્રેષ્ઠ ભલામણો","રોકાણ","નફો","/મહિનો","સ્પર્ધા","ઓછી","મધ્યમ","વધુ","બજાર વલણ","નજીકની દુકાનો","હોમ","ટ્રેન્ડ્સ","દુકાનો","ચેટ","નકશો","મોકલો","પૂછો","પૂરો હિસાબ જુઓ","સરકારી યોજનાઓ","અંતર","સૂચનાઓ"],
+  kn: ["ಹಳ್ಳಿಗೆ ವ್ಯಾಪಾರ ಸಲಹೆ","ಹೊಸ ವ್ಯಾಪಾರ ಹುಡುಕಿ","ಹಳ್ಳಿ / ಪಟ್ಟಣ","ಬಜೆಟ್","ಹುಡುಕಿ","ಉತ್ತಮ ಶಿಫಾರಸುಗಳು","ಹೂಡಿಕೆ","ಲಾಭ","/ತಿಂಗಳು","ಸ್ಪರ್ಧೆ","ಕಡಿಮೆ","ಮಧ್ಯಮ","ಹೆಚ್ಚು","ಮಾರುಕಟ್ಟೆ ಪ್ರವೃತ್ತಿ","ಹತ್ತಿರದ ಅಂಗಡಿಗಳು","ಮುಖಪುಟ","ಟ್ರೆಂಡ್ಸ್","ಅಂಗಡಿಗಳು","ಚಾಟ್","ನಕ್ಷೆ","ಕಳುಹಿಸಿ","ಕೇಳಿ","ಪೂರ್ಣ ಯೋಜನೆ","ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು","ವ್ಯಾಪ್ತಿ","ಅಧಿಸೂಚನೆಗಳು"],
+  ml: ["ഗ്രാമത്തിനുള്ള ബിസിനസ് ഉപദേശം","പുതിയ ബിസിനസ് കണ്ടെത്തുക","ഗ്രാമം / പട്ടണം","ബജറ്റ്","തിരയുക","മികച്ച നിർദ്ദേശങ്ങൾ","നിക്ഷേപം","ലാഭം","/മാസം","മത്സരം","കുറവ്","ഇടത്തരം","കൂടുതൽ","വിപണി പ്രവണത","അടുത്തുള്ള കടകൾ","ഹോം","ട്രെൻഡ്സ്","കടകൾ","ചാറ്റ്","മാപ്പ്","അയയ്ക്കുക","ചോദിക്കുക","പൂർണ്ണ പ്ലാൻ","സർക്കാർ പദ്ധതികൾ","ദൂരപരിധി","അറിയിപ്പുകൾ"],
+  pa: ["ਪਿੰਡ ਲਈ ਕਾਰੋਬਾਰ ਸਲਾਹ","ਨਵਾਂ ਕਾਰੋਬਾਰ ਲੱਭੋ","ਪਿੰਡ / ਕਸਬਾ","ਬਜਟ","ਲੱਭੋ","ਵਧੀਆ ਸਿਫ਼ਾਰਸ਼ਾਂ","ਨਿਵੇਸ਼","ਮੁਨਾਫ਼ਾ","/ਮਹੀਨਾ","ਮੁਕਾਬਲਾ","ਘੱਟ","ਦਰਮਿਆਨਾ","ਜ਼ਿਆਦਾ","ਬਾਜ਼ਾਰ ਰੁਝਾਨ","ਨੇੜਲੀਆਂ ਦੁਕਾਨਾਂ","ਹੋਮ","ਟ੍ਰੈਂਡ","ਦੁਕਾਨਾਂ","ਚੈਟ","ਨਕਸ਼ਾ","ਭੇਜੋ","ਪੁੱਛੋ","ਪੂਰਾ ਹਿਸਾਬ ਵੇਖੋ","ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ","ਦਾਇਰਾ","ਸੂਚਨਾਵਾਂ"],
+};
+
+type Ctx = {
+  /** Base language for data text (hi or en) */
+  lang: Lang;
+  uiLang: UiLang;
+  setLang: (l: UiLang) => void;
+  tr: (k: keyof typeof t | string) => string;
+};
+
+const LangContext = createContext<Ctx>({ lang: "hi", uiLang: "hi", setLang: () => {}, tr: (k) => String(k) });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("hi");
+  const [uiLang, setUi] = useState<UiLang>("hi");
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("grambiz-lang");
-    if (saved === "hi" || saved === "en") setLangState(saved);
+    const saved = window.localStorage.getItem("grambiz-lang") as UiLang | null;
+    if (saved && languages.some((l) => l.id === saved)) setUi(saved);
   }, []);
 
-  const setLang = (l: Lang) => {
-    setLangState(l);
+  const setLang = (l: UiLang) => {
+    setUi(l);
     window.localStorage.setItem("grambiz-lang", l);
   };
 
-  const tr = (k: string) => t[k]?.[lang] ?? k;
+  const lang: Lang = uiLang === "hi" ? "hi" : "en";
+  const tr = (k: string) => {
+    if (uiLang !== "hi" && uiLang !== "en") {
+      const i = (K as readonly string[]).indexOf(k);
+      if (i >= 0) return rows[uiLang][i]!;
+    }
+    return t[k]?.[lang] ?? k;
+  };
 
-  return <LangContext.Provider value={{ lang, setLang, tr }}>{children}</LangContext.Provider>;
+  return (
+    <LangContext.Provider value={{ lang, uiLang, setLang, tr }}>{children}</LangContext.Provider>
+  );
 }
 
 export function useLang() {

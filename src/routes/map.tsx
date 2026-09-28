@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import villageMap from "@/assets/village-map.jpg";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+
+const LiveMap = lazy(() => import("@/components/grambiz/LiveMap"));
 import { Panel } from "@/components/grambiz/Panel";
 import { useVillage } from "@/lib/app-state";
 import { formatRupees, getBusinesses } from "@/lib/grambiz-data";
@@ -27,8 +28,6 @@ export const Route = createFileRoute("/map")({
   component: MapPage,
 });
 
-const MAP_SIZE = 300;
-const CENTER = MAP_SIZE / 2;
 
 function MapPage() {
   const { lang, tr } = useLang();
@@ -36,6 +35,8 @@ function MapPage() {
   const [radius, setRadius] = useState(6);
   const [category, setCategory] = useState("all");
   const [selected, setSelected] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
   const businesses = getBusinesses(village.id);
   const places = useMemo(() => getNearbyPlaces(village.id), [village.id]);
@@ -52,7 +53,6 @@ function MapPage() {
   const visible = category === "all" ? inRadius : inRadius.filter((p) => p.categoryId === category);
 
   const maxKm = 15;
-  const ringR = (km: number) => (km / maxKm) * (CENTER - 14);
 
   const density = visible.length;
   const verdict =
@@ -72,72 +72,28 @@ function MapPage() {
           </span>
         }
       >
-        <div className="relative overflow-hidden rounded-2xl">
-          <img
-            src={villageMap}
-            alt={`Map around ${village.name.en}`}
-            width={1024}
-            height={1024}
-            loading="lazy"
-            className="h-[300px] w-full object-cover"
-          />
-          <svg
-            viewBox={`0 0 ${MAP_SIZE} ${MAP_SIZE}`}
-            className="absolute inset-0 h-full w-full"
-            role="img"
-            aria-label={`${visible.length} shops within ${radius} km`}
-          >
-            {[radius / 2, radius].map((km, i) => (
-              <circle
-                key={i}
-                cx={CENTER}
-                cy={CENTER}
-                r={ringR(km)}
-                fill={i === 1 ? "var(--mint)" : "transparent"}
-                fillOpacity={i === 1 ? 0.18 : 0}
-                stroke="var(--sign)"
-                strokeOpacity={i === 1 ? 0.7 : 0.3}
-                strokeDasharray={i === 1 ? "0" : "4 4"}
-                strokeWidth={1.5}
+        <div className="relative overflow-hidden rounded-2xl bg-paper">
+          {hydrated ? (
+            <Suspense fallback={<div className="h-[320px]" />}>
+              <LiveMap
+                queries={[
+                  `${village.name.en}, ${village.district.en}, ${village.stateName.en}, India`,
+                  `${village.district.en}, ${village.stateName.en}, India`,
+                  `${village.stateName.en}, India`,
+                ]}
+                places={visible}
+                radiusKm={radius}
+                selected={selected}
+                onSelect={setSelected}
+                labelFor={(p) =>
+                  `<b>${p.name[lang]}</b><br/>${p.distanceKm} km · ⭐ ${p.rating} · ${formatRupees(p.rent)}${tr("perMonth")}`
+                }
               />
-            ))}
-            {visible.map((p) => {
-              const rad = (p.angle * Math.PI) / 180;
-              const r = ringR(p.distanceKm);
-              const x = CENTER + Math.cos(rad) * r;
-              const y = CENTER + Math.sin(rad) * r;
-              const active = selected === p.id;
-              return (
-                <g
-                  key={p.id}
-                  onClick={() => setSelected(active ? null : p.id)}
-                  className="cursor-pointer"
-                >
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r={active ? 13 : 10}
-                    fill="var(--paper)"
-                    stroke="var(--sign)"
-                    strokeWidth={active ? 2.5 : 1.2}
-                  />
-                  <text x={x} y={y + 4} textAnchor="middle" fontSize="11">
-                    {p.emoji}
-                  </text>
-                </g>
-              );
-            })}
-            <circle cx={CENTER} cy={CENTER} r={7} fill="var(--tomato)" />
-            <circle
-              cx={CENTER}
-              cy={CENTER}
-              r={12}
-              fill="none"
-              stroke="var(--tomato)"
-              strokeOpacity={0.5}
-            />
-          </svg>
-          <span className="absolute left-2 top-2 rounded-full bg-paper/90 px-2 py-0.5 text-[10px] font-bold text-sign">
+            </Suspense>
+          ) : (
+            <div className="h-[320px]" />
+          )}
+          <span className="pointer-events-none absolute left-12 top-2 z-[500] rounded-full bg-paper/90 px-2 py-0.5 text-[10px] font-bold text-sign">
             {radius} km
           </span>
         </div>

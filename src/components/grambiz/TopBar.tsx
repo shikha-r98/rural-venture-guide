@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useLang } from "@/lib/i18n";
+import { languages, useLang, type UiLang } from "@/lib/i18n";
 import { useAuthUser } from "@/lib/use-auth";
+import { Notifications } from "./Notifications";
 
 export function TopBar() {
-  const { lang, setLang, tr } = useLang();
+  const { lang, uiLang, setLang, tr } = useLang();
   const { user } = useAuthUser();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -18,7 +19,7 @@ export function TopBar() {
   }
 
   return (
-    <header className="panel-dark flex items-center justify-between rounded-2xl px-4 py-3">
+    <header className="panel-dark relative z-[1100] flex items-center justify-between rounded-2xl px-4 py-3">
       <div className="flex items-center gap-2">
         <span className="grid size-9 place-items-center rounded-xl bg-amber font-display text-lg text-sign-deep">
           ग
@@ -30,13 +31,27 @@ export function TopBar() {
           <p className="text-[10px] text-paper/60">{tr("appTagline")}</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
+        {user && <Notifications />}
+        <select
+          value={uiLang}
+          onChange={(e) => setLang(e.target.value as UiLang)}
+          aria-label={tr("language")}
+          className="max-w-[88px] rounded-full bg-paper/15 px-2 py-1.5 text-xs font-semibold text-paper outline-none"
+        >
+          {languages.map((l) => (
+            <option key={l.id} value={l.id} className="text-ink">
+              {l.label}
+            </option>
+          ))}
+        </select>
         {user ? (
           <button
             onClick={signOut}
-            className="rounded-full bg-paper/15 px-3 py-1.5 text-xs font-semibold text-paper"
+            aria-label={lang === "hi" ? "लॉगआउट" : "Sign out"}
+            className="rounded-full bg-paper/15 px-2.5 py-1.5 text-xs font-semibold text-paper"
           >
-            {lang === "hi" ? "लॉगआउट" : "Sign out"}
+            ⏻
           </button>
         ) : (
           <Link
@@ -46,24 +61,6 @@ export function TopBar() {
             {lang === "hi" ? "लॉगिन" : "Sign in"}
           </Link>
         )}
-        <div className="flex rounded-full bg-paper/15 p-1">
-        <button
-          onClick={() => setLang("hi")}
-          className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-            lang === "hi" ? "bg-paper text-sign-deep" : "text-paper/70"
-          }`}
-        >
-          हिंदी
-        </button>
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-            lang === "en" ? "bg-paper text-sign-deep" : "text-paper/70"
-          }`}
-        >
-          EN
-        </button>
-        </div>
       </div>
     </header>
   );
