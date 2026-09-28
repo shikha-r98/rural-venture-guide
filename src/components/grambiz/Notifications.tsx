@@ -109,7 +109,7 @@ export function Notifications() {
   }
 
   return (
-    <div className="relative" ref={ref}>
+    <div ref={ref}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -124,7 +124,7 @@ export function Notifications() {
         )}
       </button>
       {open && (
-        <div className="absolute right-0 top-10 z-[1000] w-[290px] rounded-2xl bg-paper p-3 shadow-xl">
+        <div className="absolute inset-x-0 top-full z-[1100] mt-2 rounded-2xl bg-paper p-3 shadow-xl">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-sm font-bold text-ink">{tr("notifications")}</p>
             {unread.length > 0 && (

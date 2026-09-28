@@ -19,7 +19,7 @@ export function TopBar() {
   }
 
   return (
-    <header className="panel-dark flex items-center justify-between rounded-2xl px-4 py-3">
+    <header className="panel-dark relative z-[1100] flex items-center justify-between rounded-2xl px-4 py-3">
       <div className="flex items-center gap-2">
         <span className="grid size-9 place-items-center rounded-xl bg-amber font-display text-lg text-sign-deep">
           ग
