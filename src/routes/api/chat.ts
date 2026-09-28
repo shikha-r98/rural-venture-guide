@@ -29,9 +29,13 @@ export const Route = createFileRoute("/api/chat")({
           "You help people decide WHICH small business to start and WHERE, using local demand, competition, investment, profit, market trends and shop rent.",
           "Give short, practical answers in simple words. Use ₹ amounts, monthly profit, payback time and a clear recommendation.",
           "Avoid jargon. Use at most 5 short bullet points.",
-          lang === "hi"
-            ? "Reply in simple Hindi (Devanagari script). Keep English words only where villagers commonly use them."
-            : "Reply in simple English.",
+          typeof (body as { replyIn?: unknown }).replyIn === "string" &&
+          /^[A-Za-z]{3,12}$/.test((body as { replyIn: string }).replyIn) &&
+          !["Hindi", "English"].includes((body as { replyIn: string }).replyIn)
+            ? `Reply in simple ${(body as { replyIn: string }).replyIn} using its native script.`
+            : lang === "hi"
+              ? "Reply in simple Hindi (Devanagari script). Keep English words only where villagers commonly use them."
+              : "Reply in simple English.",
           body.context ? `Current user context: ${body.context}` : "",
         ]
           .filter(Boolean)

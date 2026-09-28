@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { useAppState, useVillage } from "@/lib/app-state";
 import { getBusinesses, formatRupees } from "@/lib/grambiz-data";
-import { useLang } from "@/lib/i18n";
+import { languages, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/chat")({
   head: () => ({
@@ -31,7 +31,7 @@ const suggestions = {
 };
 
 function ChatPage() {
-  const { lang, tr } = useLang();
+  const { lang, uiLang, tr } = useLang();
   const village = useVillage();
   const { budget } = useAppState();
   const [messages, setMessages] = useState<Msg[]>([
@@ -70,7 +70,7 @@ function ChatPage() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next, lang, context }),
+        body: JSON.stringify({ messages: next, lang, context, replyIn: languages.find((l) => l.id === uiLang)?.name }),
       });
       const data = (await res.json()) as { reply?: string; error?: string };
       if (!res.ok || !data.reply) throw new Error(data.error ?? "failed");
