@@ -28,8 +28,6 @@ export const Route = createFileRoute("/map")({
   component: MapPage,
 });
 
-const MAP_SIZE = 300;
-const CENTER = MAP_SIZE / 2;
 
 function MapPage() {
   const { lang, tr } = useLang();
@@ -37,6 +35,8 @@ function MapPage() {
   const [radius, setRadius] = useState(6);
   const [category, setCategory] = useState("all");
   const [selected, setSelected] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
   const businesses = getBusinesses(village.id);
   const places = useMemo(() => getNearbyPlaces(village.id), [village.id]);
@@ -53,7 +53,6 @@ function MapPage() {
   const visible = category === "all" ? inRadius : inRadius.filter((p) => p.categoryId === category);
 
   const maxKm = 15;
-  const ringR = (km: number) => (km / maxKm) * (CENTER - 14);
 
   const density = visible.length;
   const verdict =
