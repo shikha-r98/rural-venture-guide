@@ -130,7 +130,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <AppStateProvider>
-          <div className="sign-gradient paper-grain min-h-screen">
+          <div className="sign-gradient min-h-screen">
             <div className="mx-auto flex max-w-[430px] flex-col gap-3 px-4 pb-24 pt-3">
               <TopBar />
               {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
