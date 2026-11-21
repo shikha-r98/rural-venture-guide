@@ -52,12 +52,12 @@ const allSchemes: (Scheme & { match: (b: Business) => boolean })[] = [
   {
     id: "pmfme",
     name: { hi: "PM-FME (खाद्य प्रसंस्करण)", en: "PM-FME (food processing)" },
-    who: { hi: "आटा चक्की, मसाला, अचार, डेयरी जैसे काम", en: "Flour mill, spices, pickles, dairy units" },
+    who: { hi: "आटा चक्की, मसाला, अचार, डेयरी व अनाज प्रसंस्करण", en: "Flour, spice, pickle, dairy and grain-processing units" },
     benefit: { hi: "35% सब्सिडी, अधिकतम ₹10 लाख", en: "35% subsidy, max ₹10 lakh" },
     rate: { hi: "बैंक कर्ज़ के साथ मिलता है", en: "Credit-linked with bank loan" },
     link: "https://pmfme.mofpi.gov.in/",
     match: (b) =>
-      ["flourmill", "spice", "fruitpulp", "dairy", "fishdry", "sweets", "tea"].includes(b.id),
+      ["flourmill", "spice", "fruitpulp", "dairy", "fishdry", "sweets", "tea", "pickle", "millet", "jaggery", "paneer"].includes(b.id),
   },
   {
     id: "nabard-deds",
@@ -75,7 +75,7 @@ const allSchemes: (Scheme & { match: (b: Business) => boolean })[] = [
     benefit: { hi: "₹3 लाख तक 4% ब्याज (समय पर चुकाने पर)", en: "Up to ₹3 lakh at 4% if repaid on time" },
     rate: { hi: "4% असरदार ब्याज", en: "4% effective interest" },
     link: "https://www.myscheme.gov.in/schemes/kcc",
-    match: (b) => ["seeds", "tractor", "coldstore", "dairy", "goat", "poultry", "feed"].includes(b.id),
+    match: (b) => ["seeds", "tractor", "coldstore", "dairy", "goat", "poultry", "feed", "honey", "fishfarm", "nursery"].includes(b.id),
   },
   {
     id: "standup",

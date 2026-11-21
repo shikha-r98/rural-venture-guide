@@ -361,6 +361,196 @@ export const states: StateSeed[] = [
   },
 ];
 
+type PlaceRow = readonly [id: string, nameEn: string, nameHi: string, districtEn: string, districtHi: string];
+
+const additionalPlaces: Record<string, PlaceRow[]> = {
+  "andhra-pradesh": [
+    ["ap-bapatla", "Bapatla", "बापटला", "Bapatla", "बापटला"],
+    ["ap-mangalagiri", "Mangalagiri", "मंगलगिरि", "Guntur", "गुंटूर"],
+  ],
+  "arunachal-pradesh": [
+    ["ar-itanagar", "Itanagar", "ईटानगर", "Papum Pare", "पापुम पारे"],
+    ["ar-pasighat", "Pasighat", "पासीघाट", "East Siang", "पूर्व सियांग"],
+    ["ar-bomdila", "Bomdila", "बोमडिला", "West Kameng", "पश्चिम कामेंग"],
+  ],
+  assam: [
+    ["as-majuli", "Majuli", "माजुली", "Majuli", "माजुली"],
+    ["as-haflong", "Haflong", "हाफलोंग", "Dima Hasao", "दीमा हसाओ"],
+  ],
+  bihar: [
+    ["br-madhubani", "Madhubani", "मधुबनी", "Madhubani", "मधुबनी"],
+    ["br-gaya", "Gaya", "गया", "Gaya", "गया"],
+  ],
+  chhattisgarh: [
+    ["cg-arang", "Arang", "आरंग", "Raipur", "रायपुर"],
+    ["cg-dantewada", "Dantewada", "दंतेवाड़ा", "Dantewada", "दंतेवाड़ा"],
+    ["cg-kanker", "Kanker", "कांकेर", "Kanker", "कांकेर"],
+  ],
+  goa: [
+    ["ga-saligao", "Saligao", "सालीगांव", "North Goa", "उत्तर गोवा"],
+    ["ga-canacona", "Canacona", "कनाकोना", "South Goa", "दक्षिण गोवा"],
+    ["ga-benaulim", "Benaulim", "बेनाउलिम", "South Goa", "दक्षिण गोवा"],
+  ],
+  gujarat: [
+    ["gj-dholka", "Dholka", "ढोलका", "Ahmedabad", "अहमदाबाद"],
+    ["gj-patan", "Patan", "पाटन", "Patan", "पाटन"],
+  ],
+  haryana: [
+    ["hr-barwala", "Barwala", "बरवाला", "Hisar", "हिसार"],
+    ["hr-pehowa", "Pehowa", "पेहोवा", "Kurukshetra", "कुरुक्षेत्र"],
+    ["hr-ratia", "Ratia", "रतिया", "Fatehabad", "फतेहाबाद"],
+  ],
+  "himachal-pradesh": [
+    ["hp-palampur", "Palampur", "पालमपुर", "Kangra", "कांगड़ा"],
+    ["hp-banjar", "Banjar", "बंजार", "Kullu", "कुल्लू"],
+    ["hp-kalpa", "Kalpa", "कल्पा", "Kinnaur", "किन्नौर"],
+  ],
+  jharkhand: [
+    ["jh-deoghar", "Deoghar", "देवघर", "Deoghar", "देवघर"],
+    ["jh-khunti", "Khunti", "खूंटी", "Khunti", "खूंटी"],
+    ["jh-dumka", "Dumka", "दुमका", "Dumka", "दुमका"],
+  ],
+  karnataka: [
+    ["ka-gokarna", "Gokarna", "गोकर्ण", "Uttara Kannada", "उत्तर कन्नड़"],
+    ["ka-channapatna", "Channapatna", "चन्नपटना", "Ramanagara", "रामनगर"],
+  ],
+  kerala: [
+    ["kl-vythiri", "Vythiri", "वायथिरी", "Wayanad", "वायनाड"],
+    ["kl-vaikom", "Vaikom", "वैकोम", "Kottayam", "कोट्टायम"],
+    ["kl-kuttanad", "Kuttanad", "कुट्टनाड", "Alappuzha", "अलप्पुझा"],
+  ],
+  "madhya-pradesh": [
+    ["mp-mandu", "Mandu", "मांडू", "Dhar", "धार"],
+    ["mp-chanderi", "Chanderi", "चंदेरी", "Ashoknagar", "अशोकनगर"],
+  ],
+  maharashtra: [
+    ["mh-paithan", "Paithan", "पैठण", "Chhatrapati Sambhajinagar", "छत्रपति संभाजीनगर"],
+    ["mh-sawantwadi", "Sawantwadi", "सावंतवाड़ी", "Sindhudurg", "सिंधुदुर्ग"],
+  ],
+  manipur: [
+    ["mn-ukhrul", "Ukhrul", "उखरूल", "Ukhrul", "उखरूल"],
+    ["mn-thoubal", "Thoubal", "थौबल", "Thoubal", "थौबल"],
+    ["mn-kakching", "Kakching", "काकचिंग", "Kakching", "काकचिंग"],
+  ],
+  meghalaya: [
+    ["ml-sohra", "Sohra", "सोहरा", "East Khasi Hills", "पूर्वी खासी हिल्स"],
+    ["ml-tura", "Tura", "तुरा", "West Garo Hills", "पश्चिम गारो हिल्स"],
+    ["ml-jowai", "Jowai", "जोवाई", "West Jaintia Hills", "पश्चिम जयंतिया हिल्स"],
+  ],
+  mizoram: [
+    ["mz-lunglei", "Lunglei", "लुंगलेई", "Lunglei", "लुंगलेई"],
+    ["mz-champhai", "Champhai", "चम्फाई", "Champhai", "चम्फाई"],
+    ["mz-serchhip", "Serchhip", "सेरछिप", "Serchhip", "सेरछिप"],
+  ],
+  nagaland: [
+    ["nl-mokokchung", "Mokokchung", "मोकोकचुंग", "Mokokchung", "मोकोकचुंग"],
+    ["nl-wokha", "Wokha", "वोखा", "Wokha", "वोखा"],
+    ["nl-tuensang", "Tuensang", "तुएनसांग", "Tuensang", "तुएनसांग"],
+  ],
+  odisha: [
+    ["od-konark", "Konark", "कोणार्क", "Puri", "पुरी"],
+    ["od-koraput", "Koraput", "कोरापुट", "Koraput", "कोरापुट"],
+    ["od-jeypore", "Jeypore", "जयपुर", "Koraput", "कोरापुट"],
+  ],
+  punjab: [
+    ["pb-qadian", "Qadian", "कादियां", "Gurdaspur", "गुरदासपुर"],
+    ["pb-kila-raipur", "Kila Raipur", "किला रायपुर", "Ludhiana", "लुधियाना"],
+  ],
+  rajasthan: [
+    ["rj-phalodi", "Phalodi", "फलोदी", "Jodhpur", "जोधपुर"],
+    ["rj-barmer", "Barmer", "बाड़मेर", "Barmer", "बाड़मेर"],
+  ],
+  sikkim: [
+    ["sk-namchi", "Namchi", "नामची", "Namchi", "नामची"],
+    ["sk-ravangla", "Ravangla", "रावंगला", "Namchi", "नामची"],
+    ["sk-mangan", "Mangan", "मंगन", "Mangan", "मंगन"],
+  ],
+  "tamil-nadu": [
+    ["tn-coonoor", "Coonoor", "कुन्नूर", "Nilgiris", "नीलगिरि"],
+    ["tn-kumbakonam", "Kumbakonam", "कुंभकोणम", "Thanjavur", "तंजावुर"],
+    ["tn-tiruchendur", "Tiruchendur", "तिरुचेंदूर", "Thoothukudi", "थूथुकुडी"],
+  ],
+  telangana: [
+    ["tg-nirmal", "Nirmal", "निर्मल", "Nirmal", "निर्मल"],
+    ["tg-bhongir", "Bhongir", "भोंगीर", "Yadadri Bhuvanagiri", "यादाद्रि भुवनगिरि"],
+    ["tg-mancherial", "Mancherial", "मंचेरियल", "Mancherial", "मंचेरियल"],
+  ],
+  tripura: [
+    ["tr-udaipur", "Udaipur", "उदयपुर", "Gomati", "गोमती"],
+    ["tr-amarpur", "Amarpur", "अमरपुर", "Gomati", "गोमती"],
+    ["tr-dharmanagar", "Dharmanagar", "धर्मनगर", "North Tripura", "उत्तर त्रिपुरा"],
+  ],
+  "uttar-pradesh": [
+    ["up-chunar", "Chunar", "चुनार", "Mirzapur", "मिर्जापुर"],
+    ["up-bisalpur", "Bisalpur", "बीसलपुर", "Pilibhit", "पीलीभीत"],
+  ],
+  uttarakhand: [
+    ["uk-bageshwar", "Bageshwar", "बागेश्वर", "Bageshwar", "बागेश्वर"],
+    ["uk-almora", "Almora", "अल्मोड़ा", "Almora", "अल्मोड़ा"],
+    ["uk-lansdowne", "Lansdowne", "लैंसडाउन", "Pauri Garhwal", "पौड़ी गढ़वाल"],
+  ],
+  "west-bengal": [
+    ["wb-kalimpong", "Kalimpong", "कालिम्पोंग", "Kalimpong", "कालिम्पोंग"],
+    ["wb-bolpur", "Bolpur", "बोलपुर", "Birbhum", "बीरभूम"],
+    ["wb-cooch-behar", "Cooch Behar", "कूच बिहार", "Cooch Behar", "कूच बिहार"],
+  ],
+  "andaman-nicobar": [
+    ["an-port-blair", "Port Blair", "पोर्ट ब्लेयर", "South Andaman", "दक्षिण अंडमान"],
+    ["an-rangat", "Rangat", "रंगत", "North and Middle Andaman", "उत्तर एवं मध्य अंडमान"],
+    ["an-diglipur", "Diglipur", "डिगलीपुर", "North and Middle Andaman", "उत्तर एवं मध्य अंडमान"],
+    ["an-car-nicobar", "Car Nicobar", "कार निकोबार", "Nicobars", "निकोबार"],
+  ],
+  chandigarh: [
+    ["ch-khuda-alisher", "Khuda Alisher", "खुदा अलीशेर", "Chandigarh", "चंडीगढ़"],
+    ["ch-sarangpur", "Sarangpur", "सारंगपुर", "Chandigarh", "चंडीगढ़"],
+    ["ch-dhanas", "Dhanas", "धनास", "Chandigarh", "चंडीगढ़"],
+    ["ch-maloya", "Maloya", "मलोया", "Chandigarh", "चंडीगढ़"],
+  ],
+  "dadra-nagar-haveli-daman-diu": [
+    ["dd-silvassa", "Silvassa", "सिलवासा", "Dadra and Nagar Haveli", "दादरा और नगर हवेली"],
+    ["dd-daman", "Daman", "दमन", "Daman", "दमन"],
+    ["dd-moti-daman", "Moti Daman", "मोती दमन", "Daman", "दमन"],
+    ["dd-diu", "Diu", "दीव", "Diu", "दीव"],
+  ],
+  delhi: [
+    ["dl-alipur", "Alipur", "अलीपुर", "North Delhi", "उत्तर दिल्ली"],
+    ["dl-kanjhawala", "Kanjhawala", "कंझावला", "North West Delhi", "उत्तर पश्चिम दिल्ली"],
+    ["dl-chhawla", "Chhawla", "छावला", "South West Delhi", "दक्षिण पश्चिम दिल्ली"],
+  ],
+  "jammu-kashmir": [
+    ["jk-tangmarg", "Tangmarg", "टंगमर्ग", "Baramulla", "बारामूला"],
+    ["jk-katra", "Katra", "कटरा", "Reasi", "रियासी"],
+    ["jk-handwara", "Handwara", "हंदवाड़ा", "Kupwara", "कुपवाड़ा"],
+  ],
+  ladakh: [
+    ["la-kargil", "Kargil", "कारगिल", "Kargil", "कारगिल"],
+    ["la-diskit", "Diskit", "डिस्कित", "Leh", "लेह"],
+    ["la-alchi", "Alchi", "अलची", "Leh", "लेह"],
+  ],
+  lakshadweep: [
+    ["ld-andrott", "Andrott", "अंद्रोत्त", "Lakshadweep", "लक्षद्वीप"],
+    ["ld-agatti", "Agatti", "अगत्ती", "Lakshadweep", "लक्षद्वीप"],
+    ["ld-minicoy", "Minicoy", "मिनिकॉय", "Lakshadweep", "लक्षद्वीप"],
+    ["ld-amini", "Amini", "अमिनी", "Lakshadweep", "लक्षद्वीप"],
+  ],
+  puducherry: [
+    ["py-villianur", "Villianur", "विल्लियानूर", "Puducherry", "पुडुचेरी"],
+    ["py-karaikal", "Karaikal", "कराईकल", "Karaikal", "कराईकल"],
+    ["py-mahe", "Mahe", "माहे", "Mahe", "माहे"],
+    ["py-yanam", "Yanam", "यानम", "Yanam", "यानम"],
+  ],
+};
+
+for (const state of states) {
+  state.villages.push(
+    ...(additionalPlaces[state.id] ?? []).map(([id, nameEn, nameHi, districtEn, districtHi]) => ({
+      id,
+      name: { en: nameEn, hi: nameHi },
+      district: { en: districtEn, hi: districtHi },
+    })),
+  );
+}
+
 /** Stable pseudo-random number from a string seed. */
 export function seedNum(seed: string, min: number, max: number) {
   let h = 2166136261;
