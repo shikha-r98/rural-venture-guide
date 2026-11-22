@@ -64,12 +64,12 @@ function BusinessDetail() {
   const schemes = schemesFor(business);
 
   return (
-    <div className="flex flex-col gap-3">
-      <Link to="/" className="text-sm font-semibold text-mint-deep">
+    <div className="grid gap-3 lg:grid-cols-2 lg:items-start">
+      <Link to="/" className="text-sm font-semibold text-mint-deep lg:col-span-2">
         ← {tr("backToPicks")}
       </Link>
 
-      <section className="panel-dark rounded-2xl p-4">
+      <section className="panel-dark rounded-2xl p-4 lg:col-span-2">
         <div className="flex items-center gap-2">
           <span className="text-2xl">{business.emoji}</span>
           <div>
@@ -173,7 +173,7 @@ function BusinessDetail() {
         <p className="mt-2 text-xs text-ink/60">{tr("estimateNote")}</p>
       </Panel>
 
-      <Panel title={tr("govtSchemes")}>
+      <Panel title={tr("govtSchemes")} className="lg:col-span-2">
         <div className="flex flex-col gap-2">
           {schemes.map((s) => (
             <a
@@ -203,7 +203,7 @@ function BusinessDetail() {
 
       <Link
         to="/chat"
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-sign py-3 font-display text-[15px] tracking-wide text-paper"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-sign py-3 font-display text-[15px] tracking-wide text-paper lg:col-span-2"
       >
         💬 {tr("ask")}
       </Link>

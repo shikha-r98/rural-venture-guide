@@ -18,6 +18,8 @@ export const Route = createFileRoute("/chat")({
         property: "og:description",
         content: "A Hindi and English AI assistant for rural business decisions.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ChatPage,
@@ -84,7 +86,7 @@ function ChatPage() {
   }
 
   return (
-    <div className="flex min-h-[70vh] flex-col gap-3">
+    <div className="mx-auto flex min-h-[70vh] w-full max-w-5xl flex-col gap-3">
       <div className="panel-light flex-1 rounded-2xl p-3">
         <div className="flex items-center gap-2 border-b border-ink/10 pb-2">
           <span className="grid size-8 place-items-center rounded-lg bg-mint/25 font-display text-mint-deep">
@@ -132,7 +134,7 @@ function ChatPage() {
           e.preventDefault();
           void send(input);
         }}
-        className="panel-dark sticky bottom-20 flex items-center gap-2 rounded-2xl p-2"
+        className="panel-dark sticky bottom-20 flex items-center gap-2 rounded-2xl p-2 lg:bottom-4"
       >
         <input
           value={input}

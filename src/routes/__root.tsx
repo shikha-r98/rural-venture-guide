@@ -131,14 +131,18 @@ function RootComponent() {
       <LanguageProvider>
         <AppStateProvider>
           <div className="sign-gradient min-h-screen">
-            <div className="mx-auto flex max-w-[430px] flex-col gap-3 px-4 pb-24 pt-3">
+            <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 pb-24 pt-3 lg:px-8 lg:pb-8 lg:pt-6">
               <TopBar />
-              {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-              <AuthGate>
-                <Outlet />
-              </AuthGate>
+              <div className="flex min-w-0 items-start gap-6">
+                <SignedInNav />
+                <main className="min-w-0 flex-1">
+                  {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+                  <AuthGate>
+                    <Outlet />
+                  </AuthGate>
+                </main>
+              </div>
             </div>
-            <SignedInNav />
           </div>
         </AppStateProvider>
       </LanguageProvider>

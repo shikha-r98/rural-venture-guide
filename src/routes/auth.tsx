@@ -17,6 +17,8 @@ export const Route = createFileRoute("/auth")({
         property: "og:description",
         content: "Log in to GramBiz AI to save your village profile and business recommendations.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,

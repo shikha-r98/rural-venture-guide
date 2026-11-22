@@ -23,6 +23,8 @@ export const Route = createFileRoute("/map")({
         content:
           "Map view of nearby shops by business type with an adjustable radius, distance, rent and competition insight.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: MapPage,
@@ -63,7 +65,7 @@ function MapPage() {
         : { key: "crowdedHere", cls: "bg-tomato/20 text-tomato" };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="grid gap-3 lg:grid-cols-2 lg:items-start">
       <Panel
         title={tr("mapTitle")}
         badge={
@@ -74,7 +76,7 @@ function MapPage() {
       >
         <div className="relative overflow-hidden rounded-2xl bg-paper">
           {hydrated ? (
-            <Suspense fallback={<div className="h-[320px]" />}>
+            <Suspense fallback={<div className="h-[320px] lg:h-[420px]" />}>
               <LiveMap
                 queries={[
                   `${village.name.en}, ${village.district.en}, ${village.stateName.en}, India`,
@@ -91,7 +93,7 @@ function MapPage() {
               />
             </Suspense>
           ) : (
-            <div className="h-[320px]" />
+            <div className="h-[320px] lg:h-[420px]" />
           )}
           <span className="pointer-events-none absolute left-12 top-2 z-[500] rounded-full bg-paper/90 px-2 py-0.5 text-[10px] font-bold text-sign">
             {radius} km

@@ -30,6 +30,8 @@ export const Route = createFileRoute("/")({
         content:
           "AI business recommendations for rural India: demand, competition, profit estimates and nearby rental shops.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Dashboard,
@@ -53,9 +55,9 @@ function Dashboard() {
   const list = (picks.length > 0 ? picks : all.slice(0, 3)).slice(0, 8);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="grid gap-3 lg:grid-cols-12">
       {/* Search */}
-      <section className="panel-dark rounded-2xl p-4">
+      <section className="panel-dark rounded-2xl p-4 lg:col-span-4">
         <p className="font-display text-[15px] tracking-wide text-mint">{tr("findBusiness")}</p>
         <p className="mt-0.5 text-xs text-paper/60">{tr("findBusinessSub")}</p>
 
@@ -120,6 +122,7 @@ function Dashboard() {
       {/* Location analysis */}
       <Panel
         title={tr("locationAnalysis")}
+        className="lg:col-span-8"
         badge={
           <span className="rounded-full bg-mint/25 px-2 py-0.5 font-num text-xs font-bold text-mint-deep">
             {village.demandScore}/100
@@ -153,8 +156,8 @@ function Dashboard() {
       </Panel>
 
       {/* Recommendations */}
-      <Panel title={tr("topPicks")}>
-        <div className="flex flex-col gap-2.5">
+      <Panel title={tr("topPicks")} className="lg:col-span-7">
+        <div className="flex flex-col gap-2.5 lg:grid lg:grid-cols-2">
           {list.map((b) => (
             <Link
               key={b.id}
@@ -204,6 +207,7 @@ function Dashboard() {
         </div>
       </Panel>
 
+      <div className="flex flex-col gap-3 lg:col-span-5">
       {/* Market trends */}
       <Panel
         title={tr("marketTrends")}
@@ -275,6 +279,7 @@ function Dashboard() {
           💬 {tr("ask")}
         </Link>
       </Panel>
+      </div>
     </div>
   );
 }

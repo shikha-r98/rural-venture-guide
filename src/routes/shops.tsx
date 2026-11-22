@@ -19,6 +19,8 @@ export const Route = createFileRoute("/shops")({
         property: "og:description",
         content: "Compare rent, size and footfall of shops available near your village.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ShopsPage,
@@ -39,15 +41,16 @@ function ShopsPage() {
           </span>
         }
       >
+        <div className="grid gap-3 lg:grid-cols-2 lg:items-start">
         <img
           src={villageMap}
           alt={`Rental shop locations near ${village.name.en}`}
           width={1024}
           height={512}
           loading="lazy"
-          className="h-32 w-full rounded-xl object-cover"
+          className="h-32 w-full rounded-xl object-cover lg:sticky lg:top-6 lg:h-64"
         />
-        <div className="mt-3 flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           {rentalShops.map((s) => (
             <div key={s.id} className="rounded-xl bg-paper p-3">
               <div className="flex items-start justify-between gap-2">
@@ -64,6 +67,7 @@ function ShopsPage() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </Panel>
     </div>

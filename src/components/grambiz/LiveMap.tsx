@@ -123,5 +123,5 @@ export default function LiveMap({ queries, places, radiusKm, selected, onSelect,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, center, places, radiusKm, selected]);
 
-  return <div ref={el} className="relative z-0 h-[320px] w-full" />;
+  return <div ref={el} className="relative z-0 h-[320px] w-full lg:h-[420px]" />;
 }

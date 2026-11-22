@@ -18,6 +18,8 @@ export const Route = createFileRoute("/trends")({
         property: "og:description",
         content: "Prices, demand growth and competition levels for rural business ideas.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: TrendsPage,
@@ -26,11 +28,11 @@ export const Route = createFileRoute("/trends")({
 function TrendsPage() {
   const { lang, tr } = useLang();
   const village = useVillage();
-  const list = getBusinesses(village.id).slice(0, 10);
+  const list = getBusinesses(village.id);
   const trends = getTrends(village.id);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="grid gap-3 lg:grid-cols-2 lg:items-start">
       <Panel title={tr("marketTrends")}>
         <div className="flex flex-col gap-2">
           {trends.map((t) => (
